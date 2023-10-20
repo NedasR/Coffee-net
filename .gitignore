@@ -1,0 +1,10 @@
+.vs/
+*.obj
+*.user
+*.log
+*.tlog
+*.pdb
+*.idb
+Debug/
+Release/
+x64
