@@ -1,6 +1,7 @@
 #include "ProcessPacket.hpp"
+#include <iostream>
 
-void ProcessPacket::UDPUnPackPacket(sf::Packet& packet)
+void ProcessPacket::ReceiveUdpPackets(sf::Packet& packet)
 {
 	sf::Uint8 packetID;
 
@@ -12,6 +13,17 @@ void ProcessPacket::UDPUnPackPacket(sf::Packet& packet)
 		{
 			
 
+
+			break;
+		}
+
+		case (sf::Uint8)PacketIDs::ReceiveNetworkID:
+		{
+			sf::Uint16 NetworkID = 0;
+
+			NetworkID << packetID;
+
+			std::cout << NetworkID << " << Network ID" << std::endl;
 
 			break;
 		}

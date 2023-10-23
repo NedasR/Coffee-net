@@ -3,7 +3,7 @@
 
 void NetSprite::RequastNetworkID()
 {
-	Application::socket.send()
+	//Application::socket.send()
 }
 
 void NetSprite::Update()

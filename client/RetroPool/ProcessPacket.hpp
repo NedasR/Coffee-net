@@ -5,12 +5,13 @@ enum class PacketIDs : sf::Uint8
 {	
 	Ping = 1,
 	RequastNetworkID = 2,
+	ReceiveNetworkID = 3,
 };
 
 class ProcessPacket
 {
 	public:
 
-	static void UDPUnPackPacket(sf::Packet& packet);
+	static void ReceiveUdpPackets(sf::Packet& packet);
 
 };

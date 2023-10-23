@@ -1,27 +1,33 @@
 #include "Application.hpp"
+#include "ProcessPacket.hpp"
 
 void Application::GameInit()
 {
-    window.create(sf::VideoMode(400, 400), "Coffee's Client");
+    m_window.create(sf::VideoMode(400, 400), "Coffee's Client");
 
 	m_currentScene = std::make_shared<Scene>();
 
 	m_headScene = m_currentScene.get();
 
+    if (socket.bind(m_clientPort, m_clientIP) == sf::Socket::Error) {std::cout << "failed to connect"<<std::endl;}
+
+    socket.setBlocking(false);
+
 	m_headScene->LoadScene();
+
 }
 
 void Application::GameLoop()
 {
-    while (window.isOpen())
+    while (m_window.isOpen())
     {
         //change from here to
         sf::Event event;
-        while (window.pollEvent(event))
+        while (m_window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
             {
-                window.close();
+                m_window.close();
             }
             if (event.type == sf::Event::KeyPressed)
             {
@@ -41,20 +47,33 @@ void Application::GameLoop()
 
                     std::getline(std::cin, words);
 
-                    socket.send(words.c_str(), words.size(), "192.168.1.153", serverPort);
+                    socket.send(words.c_str(), words.size(), "192.168.1.153", m_serverPort);
                 }
             }
         }
+
+        sf::Packet packet;
+        packet << (sf::Uint8)PacketIDs::RequastNetworkID;
+
+        socket.send(packet,m_serverIP,m_serverPort);
+
         //here
+        sf::IpAddress ip;
+        unsigned short port = 0;
+        m_receivedPacket.clear();
+        if (socket.receive(m_receivedPacket, ip, port) == sf::Socket::Done);
+        {
+        ProcessPacket::ReceiveUdpPackets(m_receivedPacket);
+        }
 
         if (m_headScene)
         {
             m_headScene->Update();
         }
 
-        window.clear();
+        m_window.clear();
         //window.draw();
-        window.display();
+        m_window.display();
     }
 
 	Render();

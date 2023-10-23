@@ -13,9 +13,12 @@ class Application
 
 	std::shared_ptr<Scene> m_currentScene;
 
-	sf::RenderWindow window;
-	std::string clientIP = "192.168.1.153";
-	unsigned int serverPort = 60000;
+	sf::RenderWindow m_window;
+	sf::IpAddress m_serverIP = sf::IpAddress("192.168.1.153");
+	unsigned short m_serverPort = 60000;
+
+	sf::IpAddress m_clientIP = sf::IpAddress("192.168.1.153");
+	unsigned short m_clientPort = 60001;
 
 	bool Binded = true;
 
@@ -23,7 +26,9 @@ class Application
 
 	public:
 
-	static sf::UdpSocket socket;
+	sf::UdpSocket socket;
+
+	sf::Packet m_receivedPacket;
 
 	void GameInit();
 
