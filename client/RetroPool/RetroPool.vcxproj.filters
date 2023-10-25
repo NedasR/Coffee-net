@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Networking">
+      <UniqueIdentifier>{1dd58a2a-3429-4f0d-8f08-5ebd19b06670}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\NetEntitiesSprites">
+      <UniqueIdentifier>{1e29aebb-2438-4c08-a164-13e668510e91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes">
+      <UniqueIdentifier>{48afa2cc-322a-4cb7-ba29-8299a9d84785}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -24,17 +33,32 @@
     <ClCompile Include="ConnectionHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ProcessPacket.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RendererManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
+    <ClCompile Include="Character.hpp">
+      <Filter>Source Files\NetEntitiesSprites</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Source Files\NetEntitiesSprites</Filter>
+    </ClCompile>
     <ClCompile Include="NetSprite.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\NetEntitiesSprites</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessPacket.cpp">
+      <Filter>Source Files\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkManager.cpp">
+      <Filter>Source Files\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -44,17 +68,26 @@
     <ClInclude Include="ConnectionHandler.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ProcessPacket.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RendererManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.hpp">
+    <ClInclude Include="NetSprite.hpp">
+      <Filter>Source Files\NetEntitiesSprites</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NetSprite.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="NetworkManager.hpp">
+      <Filter>Source Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessPacket.hpp">
+      <Filter>Source Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleScene.hpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.hpp">
+      <Filter>Source Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

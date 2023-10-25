@@ -1,11 +1,41 @@
 #include "GameManager.hpp"
 
-void GameManager::SetHeadCharacter()
+GameManager* GameManager::m_instance = nullptr;
+Character* GameManager::m_headCharacter = nullptr;
+
+GameManager::GameManager()
+{
+	if (!m_instance)
+	{
+		m_instance = this;
+	}
+}
+
+GameManager::~GameManager()
 {
 
 }
 
-bool GameManager::IsHeadCharacter()
+void GameManager::SetHeadCharacter(Character& character)
 {
+	if (!m_headCharacter)
+	{
+		m_headCharacter = &character;
+		m_headCharacter->isMain = true;
+	}
+	else 
+	{
+		m_headCharacter->isMain = false;
+		m_headCharacter = &character;
+		m_headCharacter->isMain = true;
+	}
+}
+
+bool GameManager::IsHeadCharacter(Character& character)
+{
+	if (character.isMain)
+	{
+		return true;
+	}
 	return false;
 }

@@ -20,10 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NetworkIDHandler.cpp" />
+    <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="PacketProcessing.cpp" />
     <ClCompile Include="Server.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="NetworkIDHandler.hpp" />
+    <ClInclude Include="NetworkManager.hpp" />
     <ClInclude Include="PacketProcessing.hpp" />
     <ClInclude Include="Server.hpp" />
   </ItemGroup>

@@ -1,36 +1,41 @@
 #include "Character.hpp"
-#include <SFML/Window/Event.hpp>
-#include "Application.hpp"
+#include "NetworkManager.hpp"
 
-void Character::Controls()
+void Character::Controls(sf::Event& event)
 {
-    sf::Event event;
-    while (Application::m_window.pollEvent(event)) {
-
-        if (event.type == sf::Event::KeyPressed) 
+    if(isMain)
+    {
+        sf::Vector2f vec = sf::Vector2f(0.f, 0.f);
+        if (event.type == sf::Event::KeyPressed)
         {
-            if (event.key.code == sf::Keyboard::W)
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
             {
-
+                vec.y -= 1;
             }
-            if (event.key.code == sf::Keyboard::A)
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
             {
-
+                vec.x -= 1;
             }
-            if (event.key.code == sf::Keyboard::S)
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
             {
-
+                vec.y += 1;
             }
-            if (event.key.code == sf::Keyboard::D)
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
             {
-
+                vec.x += 1;
             }
-
         }
+        this->move(vec);
     }
 }
 
-void Character::Update()
+Character::Character()
 {
-    Controls();
+    //RequastNetworkID();
+    //NetworkManager::m_instance->AddToNetwork(*this);
+}
+
+void Character::Update(sf::Event& event)
+{
+    Controls(event);
 }

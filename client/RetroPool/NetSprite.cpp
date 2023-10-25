@@ -1,12 +1,17 @@
 #include "NetSprite.hpp"
 #include "Application.hpp"
+#include "NetworkManager.hpp"
+#include "ProcessPacket.hpp"
 
 void NetSprite::RequastNetworkID()
 {
-	//Application::socket.send()
+	sf::Packet packet;
+	packet << (sf::Uint8)PacketIDs::RequastNetworkID;
+	NetworkManager::m_instance->SendPacketServer(packet);
 }
 
-void NetSprite::Update()
+NetSprite::NetSprite()
 {
-
+	RequastNetworkID();
+	NetworkManager::m_instance->AddToNetwork(*this);
 }

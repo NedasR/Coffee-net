@@ -1,5 +1,6 @@
 #include "ProcessPacket.hpp"
 #include <iostream>
+#include "NetworkManager.hpp"
 
 void ProcessPacket::ReceiveUdpPackets(sf::Packet& packet)
 {
@@ -19,9 +20,10 @@ void ProcessPacket::ReceiveUdpPackets(sf::Packet& packet)
 
 		case (sf::Uint8)PacketIDs::ReceiveNetworkID:
 		{
-			sf::Uint16 NetworkID = 0;
+			sf::Uint16 NetworkID;
 
-			NetworkID << packetID;
+			packet >> NetworkID;
+			NetworkManager::m_instance->AssignNetID(NetworkID);
 
 			std::cout << NetworkID << " << Network ID" << std::endl;
 

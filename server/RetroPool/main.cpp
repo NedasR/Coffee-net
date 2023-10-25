@@ -3,65 +3,24 @@
 #include <vector>
 
 #include <SFML/Network.hpp>
-
+#include "Server.hpp"
+#include "NetworkIDHandler.hpp"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(400, 400), "Coffee's Server");
-
-    unsigned int serverPort;
-
     sf::IpAddress serverIP = "192.168.1.153";
 
-    unsigned short clinetPort;
-    std::string clinetIP;
-
-    sf::IpAddress rec = "192.168.1.153";
-
-    sf::UdpSocket socket;
-    serverPort = 60000;
-
-    sf::TcpListener listner;
-    listner.setBlocking(false);
-
-    socket.setBlocking(false);
-    if (socket.bind(serverPort, serverIP) != sf::Socket::Done)
-    {
-        std::cout << "nope";
-    };
+    unsigned short serverPort; serverPort = 60000;
 
     std::cout << serverPort << std::endl;
 
-    char data[100];
+    NetworkManager networkManager;
 
-    std::size_t received;
+    Server server(serverIP, serverPort);
 
-    std::size_t size = 100;
+    server.ServerInit();
 
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-            {
-                window.close();
-            }
-        }
+    server.ServerLoop();
 
-        if (socket.receive(data, size, received, rec, clinetPort) == sf::Socket::Done)
-        {
-            std::cout << std::string(data,received) << std::endl;
-        }
-
-        if (listner.listen(60000, serverIP) != sf::Socket::Done)
-        {
-            //std::cout << "this got pinged";
-        }
-
-        window.clear();
-        //window.draw();
-        window.display();
-    }
     return 0;
 }

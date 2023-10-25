@@ -5,13 +5,7 @@ void Application::GameInit()
 {
     m_window.create(sf::VideoMode(400, 400), "Coffee's Client");
 
-	m_currentScene = std::make_shared<Scene>();
-
-	m_headScene = m_currentScene.get();
-
-    if (socket.bind(m_clientPort, m_clientIP) == sf::Socket::Error) {std::cout << "failed to connect"<<std::endl;}
-
-    socket.setBlocking(false);
+	m_headScene = &Cscene;
 
 	m_headScene->LoadScene();
 
@@ -29,42 +23,15 @@ void Application::GameLoop()
             {
                 m_window.close();
             }
-            if (event.type == sf::Event::KeyPressed)
-            {
-                if (event.key.code == sf::Keyboard::S && !Binded)
-                {
-                    std::cout << "please put in the port" << std::endl;
-                    //std::cin >> serverPort;
-
-                    Binded = true;
-                }
-
-                if (event.key.code == sf::Keyboard::D && Binded)
-                {
-                    std::string words;
-
-                    std::cout << "write something" << std::endl;
-
-                    std::getline(std::cin, words);
-
-                    socket.send(words.c_str(), words.size(), "192.168.1.153", m_serverPort);
-                }
-            }
+            m_renderMag.UpdateTheList(event);
         }
-
-        sf::Packet packet;
-        packet << (sf::Uint8)PacketIDs::RequastNetworkID;
-
-        socket.send(packet,m_serverIP,m_serverPort);
-
         //here
-        sf::IpAddress ip;
-        unsigned short port = 0;
-        m_receivedPacket.clear();
-        if (socket.receive(m_receivedPacket, ip, port) == sf::Socket::Done);
-        {
-        ProcessPacket::ReceiveUdpPackets(m_receivedPacket);
-        }
+        //sf::Packet packet;
+        //packet << (sf::Uint8)PacketIDs::RequastNetworkID;            
+
+        //networkManager.SendPacketServer(packet);
+
+        networkManager.SocketListen();
 
         if (m_headScene)
         {
@@ -72,11 +39,9 @@ void Application::GameLoop()
         }
 
         m_window.clear();
-        //window.draw();
+        m_renderMag.RenderTheList(m_window);
         m_window.display();
     }
-
-	Render();
 }
 
 void Application::Render()

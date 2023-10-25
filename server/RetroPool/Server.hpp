@@ -2,23 +2,19 @@
 #include <SFML/Network.hpp>
 
 #include "PacketProcessing.hpp"
+#include "NetworkManager.hpp"
 
 class Server
 {
 	private:
 
-	sf::IpAddress m_serverAddress;
-	unsigned int m_serverPort;
-	sf::UdpSocket m_socket;
-
 	public:
 
-	Server(sf::IpAddress serverAddress,unsigned int serverPort): m_serverAddress(serverAddress), m_serverPort(serverPort)
-	{
-		m_socket.bind(serverPort, serverAddress);
-	};
+	Server(sf::IpAddress& serverAddress,unsigned short serverPort);
 
+	void ServerLoop();
 
+	void ServerInit();
 
 
 };

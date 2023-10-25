@@ -24,12 +24,24 @@
     <ClCompile Include="PacketProcessing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="NetworkIDHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Server.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PacketProcessing.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkIDHandler.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
