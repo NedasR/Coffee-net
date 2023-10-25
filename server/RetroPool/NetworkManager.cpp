@@ -31,3 +31,10 @@ void NetworkManager::SendBack(sf::Packet& packet)
 {
 	m_socket.send(packet,m_receivedIP,m_receivedPort);
 }
+
+void NetworkManager::ConnectToServer()
+{
+	// will need to be reworked to implement disconnection
+	m_clientsConnected.push_back(std::make_pair(m_receivedIP, m_receivedPort));
+	std::cout << "client has connected: " << m_receivedIP << " ip << >> port  " << m_receivedPort <<std::endl;
+}

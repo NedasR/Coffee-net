@@ -14,6 +14,14 @@ void CircleScene::LoadScene()
     character.get()->setColor(sf::Color(sf::Color::Blue));
 	GameManager::m_instance->SetHeadCharacter(*character.get());
 	RendererManager::AddToRenderer(character);
+
+    /*
+    load texture
+    * 
+    * object settings
+    * 
+    RendererManager::AddToRenderer(character);
+    */
 }
 
 void CircleScene::Update()

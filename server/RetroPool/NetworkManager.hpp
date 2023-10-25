@@ -13,6 +13,8 @@ class NetworkManager
 	sf::IpAddress m_receivedIP;
 	sf::Packet m_receivedPacket;
 
+	std::vector<std::pair<sf::IpAddress, unsigned short>> m_clientsConnected;
+
 	public:
 
 	NetworkManager();
@@ -24,4 +26,6 @@ class NetworkManager
 	void SocketListen();
 
 	void SendBack(sf::Packet& packet);
+
+	void ConnectToServer();
 };

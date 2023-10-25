@@ -26,5 +26,10 @@ void PacketProcessing::ProcessPacket(sf::Packet packet)
 			NetworkManager::m_instance->SendBack(sendPacket);
 			break;
 		}
+		case (sf::Uint8)PacketIDs::ConnectToServer:
+		{
+			NetworkManager::m_instance->ConnectToServer();
+			break;
+		}
 	}
 }

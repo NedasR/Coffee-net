@@ -40,4 +40,6 @@ class NetworkManager
 
 	void SendPacketServer(sf::Packet& packet);
 
+	void ConnectToServer(sf::IpAddress ipaddress,unsigned short port); 
+
 };

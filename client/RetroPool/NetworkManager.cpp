@@ -50,3 +50,10 @@ void NetworkManager::SendPacketServer(sf::Packet& packet)
 {
     m_socket.send(packet, m_serverIP, m_serverPort);
 }
+
+void NetworkManager::ConnectToServer(sf::IpAddress ipaddress, unsigned short port)
+{
+    sf::Packet packet;
+    packet << (sf::Uint8)PacketIDs::ConnectToServer;
+    m_socket.send(packet,ipaddress,port);
+}
