@@ -5,6 +5,8 @@ void Application::GameInit()
 {
     m_window.create(sf::VideoMode(400, 400), "Coffee's Client");
 
+    m_window.setFramerateLimit(60);
+
     NetworkManager::m_instance->ConnectToServer(sf::IpAddress("192.168.1.153"),(unsigned short)60000);
 
 	m_headScene = &Cscene;
@@ -25,7 +27,14 @@ void Application::GameLoop()
             {
                 m_window.close();
             }
-            m_renderMag.UpdateTheList(event);
+            if (event.type == sf::Event::MouseButtonPressed)
+            {
+                m_window.hasFocus();
+            }
+        }
+        if (m_window.hasFocus())
+        {
+        m_renderMag.UpdateTheList();
         }
         //here
         //sf::Packet packet;
@@ -34,6 +43,8 @@ void Application::GameLoop()
         //networkManager.SendPacketServer(packet);
 
         networkManager.SocketListen();
+
+        networkManager.SyncLateJoiner(); // will need to be moved to like a application update client 
 
         if (m_headScene)
         {

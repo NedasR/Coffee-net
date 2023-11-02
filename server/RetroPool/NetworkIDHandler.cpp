@@ -2,6 +2,23 @@
 #include <iostream>
 
 std::unordered_map<sf::Uint16, NetworkObjectInfo> NetworkIDHandler::m_networkIDs;
+std::unordered_map<sf::Uint16, sf::Uint16> NetworkIDHandler::m_localToNetworkIDs;
+
+sf::Uint16 NetworkIDHandler::GetSyncedLocalID(sf::Uint16 localID)
+{
+    auto it = m_localToNetworkIDs.find(localID);
+
+    if (it == m_localToNetworkIDs.end())
+    {
+        // if the local id not mapped to networkID this will map it
+        m_localToNetworkIDs.emplace(localID,GetUniqueNetworkID());
+        return m_localToNetworkIDs[localID];
+    }
+    else
+    {
+        return m_localToNetworkIDs[localID];
+    }
+}
 
 sf::Uint16 NetworkIDHandler::GetUniqueNetworkID()
 {

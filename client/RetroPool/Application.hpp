@@ -16,7 +16,7 @@ class Application
 
 	std::shared_ptr<Scene> m_currentScene;
 
-	Scene* m_headScene;
+	Scene* m_headScene = nullptr;
 
 	sf::RenderWindow m_window;
 

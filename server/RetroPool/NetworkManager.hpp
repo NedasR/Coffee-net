@@ -13,11 +13,13 @@ class NetworkManager
 	sf::IpAddress m_receivedIP;
 	sf::Packet m_receivedPacket;
 
+	public:
+	// needs change
 	std::vector<std::pair<sf::IpAddress, unsigned short>> m_clientsConnected;
 
-	public:
-
 	NetworkManager();
+
+	std::pair<sf::IpAddress, unsigned short> GetRecentSender();
 
 	static NetworkManager* m_instance;
 
@@ -28,4 +30,6 @@ class NetworkManager
 	void SendBack(sf::Packet& packet);
 
 	void ConnectToServer();
+
+	void SendToAllClients(sf::Packet& packet);
 };

@@ -6,7 +6,6 @@
 class CircleScene : public Scene
 {
 	private:
-		std::shared_ptr<Character> character;
 		sf::Texture texture;
 		sf::Image image;
 	public:

@@ -14,6 +14,12 @@ NetworkManager::NetworkManager()
 	m_socket.setBlocking(false);
 }
 
+std::pair<sf::IpAddress, unsigned short> NetworkManager::GetRecentSender()
+{
+	std::pair<sf::IpAddress, unsigned short> current = std::make_pair(m_receivedIP, m_receivedPort);
+	return current;
+}
+
 void NetworkManager::BindSocket(sf::IpAddress& ipAddress, unsigned short port)
 {
 	m_socket.bind(port, ipAddress);
@@ -36,5 +42,15 @@ void NetworkManager::ConnectToServer()
 {
 	// will need to be reworked to implement disconnection
 	m_clientsConnected.push_back(std::make_pair(m_receivedIP, m_receivedPort));
-	std::cout << "client has connected: " << m_receivedIP << " ip << >> port  " << m_receivedPort <<std::endl;
+	std::cout << "client has connected: " << m_receivedIP << " IP << >> port  " << m_receivedPort <<std::endl;
+}
+
+void NetworkManager::SendToAllClients(sf::Packet& packet)
+{
+	for (auto it : m_clientsConnected)
+	{
+		// temp fix
+		//if (m_receivedIP == it.first && m_receivedPort == it.second) { continue; }
+		m_socket.send(packet, it.first, it.second);
+	}
 }
