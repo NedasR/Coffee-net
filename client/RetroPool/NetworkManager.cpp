@@ -19,11 +19,8 @@ NetworkManager::NetworkManager()
 void NetworkManager::SyncNetID(sf::Uint16 id, std::shared_ptr<NetSprite>& sprite)
 {
     sprite->SetNetworkID(id);
-    //std::pair<sf::Uint16, std::shared_ptr<NetSprite>> pair = std::make_pair(id, sprite);
     m_networkId[id] = sprite;
-
-    std::cout << sprite.get()->GetNetworkID() << "New sync ID" << std::endl;
-    //std::cout << pair.second.use_count() << " count reference NEW 3" << std::endl;
+    std::cout << sprite.get()->GetNetworkID() << "New synced ID" << std::endl;
 }
 
 void NetworkManager::AssignNetID(sf::Uint16 id)
@@ -31,7 +28,7 @@ void NetworkManager::AssignNetID(sf::Uint16 id)
     std::shared_ptr<NetSprite> ptr = m_netIDAssignmentQueue.front();
     ptr->SetNetworkID(id);
     std::pair<sf::Uint16, std::shared_ptr<NetSprite>> pair = std::make_pair(id, ptr);
-    m_networkId.emplace(pair);
+    m_networkId[id] = ptr;
     m_netIDAssignmentQueue.pop();
 }
 
@@ -43,7 +40,7 @@ void NetworkManager::AssignNetID(sf::Uint16 id, sf::Uint16 localID)
         ptr->SetNetworkID(id);
         m_LocalToNetAssignmentQueue.erase(m_LocalToNetAssignmentQueue.begin());
     }
-    else
+    else // if it is the wrong id it will go trough the rest of the list
     {
         int count = 0;
         for (auto it : m_LocalToNetAssignmentQueue)
@@ -64,6 +61,7 @@ void NetworkManager::AssignNetID(sf::Uint16 id, sf::Uint16 localID)
 void NetworkManager::AddToNetwork(std::shared_ptr<NetSprite> sprite)
 {
 
+    // rework in the near future
     if (sprite == nullptr)
     {
         std::cerr << "Error: The object is invalid." << std::endl;
@@ -74,6 +72,7 @@ void NetworkManager::AddToNetwork(std::shared_ptr<NetSprite> sprite)
 
 void NetworkManager::AddToNetwork(std::shared_ptr<NetSprite> sprite,bool local)
 {
+    // rework in the near future this too
     if (sprite == nullptr)
     {
         std::cerr << "Error: The object is invalid." << std::endl;
@@ -135,7 +134,7 @@ std::shared_ptr<NetSprite> NetworkManager::GetNetworkedObject(sf::Uint16 network
 {
     if (!m_networkId[networkID])
     {
-        std::cout << " dose not exist" <<std::endl;
+        std::cout << "dose not exist" <<std::endl;
     }
     return m_networkId[networkID];
 }

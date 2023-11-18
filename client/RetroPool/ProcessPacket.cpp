@@ -62,7 +62,6 @@ void ProcessPacket::ReceiveUdpPackets(sf::Packet& packet)
 			{
 			NetworkManager::m_instance->GetNetworkedObject(NetworkID).get()->setPosition(x,y);
 			}
-			//std::cout << NetworkID << " update " << NetworkManager::m_instance->NetworkIDExists(NetworkID) << std::endl;
 			break;
 		}
 
@@ -82,13 +81,15 @@ void ProcessPacket::ReceiveUdpPackets(sf::Packet& packet)
 					std::shared_ptr<NetSprite> ptr = std::make_shared<Character>(NetworkID);
 					RendererManager::image;
 					RendererManager::texture;
-					ptr.get()->setPosition(20.0f, 20.0f);
+					sf::Vector2f pos;
+					packet >> pos.x >> pos.y;
+					ptr.get()->setPosition(pos);
 					ptr.get()->setScale(7, 7);
 					ptr.get()->setTexture(RendererManager::texture);
 					ptr.get()->setColor(sf::Color(sf::Color::Blue));
 					RendererManager::AddToRenderer(ptr);
 					ptr.get()->SyncNetworkID(NetworkID);
-					//NetworkManager::m_instance->SyncNetID(NetworkID, ptr);
+
 					}
 					break;
 				}

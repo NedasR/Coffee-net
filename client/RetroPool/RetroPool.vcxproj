@@ -24,6 +24,7 @@
     <ClCompile Include="Character.hpp" />
     <ClCompile Include="CircleScene.cpp" />
     <ClCompile Include="ConnectionHandler.cpp" />
+    <ClCompile Include="Delta.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NetSprite.cpp" />
@@ -36,6 +37,7 @@
     <ClInclude Include="Application.hpp" />
     <ClInclude Include="CircleScene.hpp" />
     <ClInclude Include="ConnectionHandler.hpp" />
+    <ClInclude Include="Delta.hpp" />
     <ClInclude Include="GameManager.hpp" />
     <ClInclude Include="NetSprite.hpp" />
     <ClInclude Include="NetworkManager.hpp" />

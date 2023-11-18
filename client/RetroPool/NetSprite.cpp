@@ -6,6 +6,7 @@ sf::Uint16 NetSprite::m_localIDCount;
 
 void NetSprite::RequastNetworkID(bool useLocalID)
 {
+	// change this to only apply to objects that not dynamically allocated
 	m_localIDCount++;
 	LocalID = m_localIDCount;
 	sf::Packet packet;
@@ -17,8 +18,7 @@ void NetSprite::RequastNetworkID(bool useLocalID)
 
 NetSprite::NetSprite()
 {
-	// this could cause wrong assignment of networkID to localID since udp dose not 100% grantee that packets will be sent in order
-	RequastNetworkID(false); // will need change in near future
+	RequastNetworkID(false);
 }
 
 NetSprite::NetSprite(bool useLocalID)
@@ -44,6 +44,5 @@ void NetSprite::SyncToNetwork()
 
 void NetSprite::SyncToNetwork(bool local)
 {
-	//m_itSelf = shared_from_this();
 	NetworkManager::m_instance->AddToNetwork(shared_from_this(), local);
 }

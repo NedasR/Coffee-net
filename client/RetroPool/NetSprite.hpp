@@ -16,11 +16,11 @@ class NetSprite : public sf::Sprite , public std::enable_shared_from_this<NetSpr
 
 	sf::Uint16 LocalID = 0;
 
+	std::shared_ptr<NetSprite> m_itSelf;
+
 	void RequastNetworkID(bool useLocalID);
 
 	public:
-
-	std::shared_ptr<NetSprite> m_itSelf;
 
 	NetSprite();
 

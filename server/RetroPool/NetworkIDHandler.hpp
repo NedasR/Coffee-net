@@ -27,4 +27,6 @@ class NetworkIDHandler
 
 	static sf::Uint16 GetUniqueNetworkID();
 
+	static NetworkObjectInfo& GetNetworkObjectInfo(sf::Uint16 id);
+
 };

@@ -7,7 +7,6 @@
 void CircleScene::LoadScene()
 {
     std::shared_ptr<Character> character = std::make_shared<Character>(false);
-    //character->m_itSelf = character;
     image.create(20, 20, sf::Color::Blue);
     texture.loadFromImage(image);
     character.get()->setPosition(20.0f, 20.0f);
@@ -17,7 +16,6 @@ void CircleScene::LoadScene()
 	GameManager::m_instance->SetHeadCharacter(*character.get());
 	RendererManager::AddToRenderer(character);
     character->SyncToNetwork();
-    //NetworkManager::m_instance->AddToNetwork(character);
     /*
     load texture
     * 

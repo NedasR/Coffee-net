@@ -60,33 +60,60 @@ void PacketProcessing::ProcessPacket(sf::Packet packet)
 
 		case (sf::Uint8)PacketIDs::PostionUpdate:
 		{
+			sf::Int8 W = 0, A = 0, S = 0, D = 0;
 			sf::Uint16 ID;
-			float x;
-			float y;
-			packet >> ID >> x >> y;
+			packet >> ID;
+			NetworkObjectInfo& ptr = NetworkIDHandler::GetNetworkObjectInfo(ID);
+			//packet >> ptr.m_position.x >> ptr.m_position.y;
+			packet >> W >> A >> S >> D;
+			if (W)
+			{
+				ptr.m_position.y -= 20.0f * 0.4f;
+				W = 1;
+			}
+			if (A)
+			{
+				ptr.m_position.x -= 20.0f * 0.4f;
+				A = -1;
+			}
+			if (S)
+			{
+				ptr.m_position.y += 20.0f * 0.4f;
+				S = -1;
+			}
+			if (D)
+			{
+				ptr.m_position.x += 20.0f * 0.4f;
+				D = 1;
+			}
 			sendPacket << (sf::Uint8)PacketIDs::PostionUpdate;
-			sendPacket << ID << x << y;
+			sendPacket << ID << ptr.m_position.x << ptr.m_position.y;
 			//std::cout << "Networked ID : " << ID << " Position :" << x << " " << y << std::endl;
 			NetworkManager::m_instance->SendToAllClients(sendPacket);
 			break;
 		}
 
+		// this will need a a big rework since the late joiner should get everything updated on it's side 
+		// but the other clients should update only the new objects that have been created because of the new client
 		case (sf::Uint8)PacketIDs::LateJoinerSync:
 		{
-			//will need change to sync since this avoids sending to the sender so id dose not copy it's self
-			auto requestSender = NetworkManager::m_instance->GetRecentSender();
+			
+			//auto requestSender = NetworkManager::m_instance->GetRecentSender();
 			for (auto it : NetworkManager::m_instance->m_clientsConnected)
 			{
 				std::cout << " client : "<< it.first << " port : " << it.second << std::endl;
-				//if (it.first == requestSender.first
-				//    && it.second == requestSender.second) return;
 
+				//client checks each id if it has it or not if it dose it won't sync the id
 				for(auto& ids : NetworkIDHandler::m_networkIDs)
 				{
+				
 				sendPacket.clear();
 				sendPacket << (sf::Uint8)PacketIDs::SyncObject;
 				sendPacket << (sf::Uint8)ObjectTypeIDs::Character;
 				sendPacket << ids.first;// id
+				NetworkObjectInfo& ptr = NetworkIDHandler::GetNetworkObjectInfo(ids.first);
+				// expand to have stuff like scale, rotation and other stuff
+				sendPacket << ptr.m_position.x << ptr.m_position.y;
 
 				NetworkManager::m_instance->SendToAllClients(sendPacket);
 				}

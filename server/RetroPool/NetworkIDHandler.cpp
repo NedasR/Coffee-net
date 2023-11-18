@@ -43,3 +43,13 @@ sf::Uint16 NetworkIDHandler::GetUniqueNetworkID()
         key++;
     }
 }
+
+NetworkObjectInfo& NetworkIDHandler::GetNetworkObjectInfo(sf::Uint16 id)
+{
+    if (m_networkIDs.find(id) != m_networkIDs.end())
+    {
+        return m_networkIDs[id];
+    }
+
+    throw std::runtime_error("NetworkObjectInfo with ID not found");
+}

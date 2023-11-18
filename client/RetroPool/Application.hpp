@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Delta.hpp"
 #include <memory>
 #include "Scene.hpp"
 #include <iostream>
@@ -13,6 +14,8 @@
 class Application
 {
 	private:
+
+	Delta DeltaTime;
 
 	std::shared_ptr<Scene> m_currentScene;
 

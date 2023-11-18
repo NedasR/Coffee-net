@@ -22,8 +22,4 @@ class Character : public NetSprite
 	bool isMain = false;
 
 	void Update() override;
-
-	//inline sf::Uint16 GetNetworkID() {return m_networkID;}
-
-	//inline void SetNetworkID(sf::Uint16 id) { m_networkID = id; }
 };
