@@ -5,10 +5,15 @@
 #include "NetSprite.hpp"
 #include "Character.hpp"
 #include <memory>
+#include <chrono>
 
 void ProcessPacket::ReceiveUdpPackets(sf::Packet& packet)
 {
 	sf::Uint8 packetID;
+	
+	int tickstuff;
+	//which tick we are on or if it is a tick packet or not
+	packet >> tickstuff;
 
 	packet >> packetID;
 
@@ -16,9 +21,12 @@ void ProcessPacket::ReceiveUdpPackets(sf::Packet& packet)
 	{
 		case (sf::Uint8)PacketIDs::Ping:
 		{
-			
 
-
+			sf::Packet sendPacket;
+			std::chrono::milliseconds time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+			sendPacket << (sf::Uint8)PacketIDs::Ping;
+			sendPacket << static_cast<std::uint64_t>(time.count());
+			NetworkManager::m_instance->SendBack(sendPacket);
 			break;
 		}
 

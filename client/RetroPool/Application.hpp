@@ -11,6 +11,7 @@
 #include "CircleScene.hpp"
 #include "RendererManager.hpp"
 #include "Character.hpp"
+#include "TickManager.hpp"
 class Application
 {
 	private:
@@ -28,6 +29,8 @@ class Application
 	CircleScene Cscene;
 
 	RendererManager m_renderMag;
+
+	TickManager m_tickManager;
 
 	public:
 

@@ -1,6 +1,7 @@
 #include "NetworkManager.hpp"
 #include "ProcessPacket.hpp"
 #include <iostream>
+#include "TickManager.hpp"
 
 NetworkManager* NetworkManager::m_instance = nullptr;
 
@@ -86,7 +87,14 @@ void NetworkManager::SocketListen()
     m_receivedPacket.clear();
     if (m_socket.receive(m_receivedPacket, m_recivedIP, m_recivedPort) == sf::Socket::Done)
     {
-        ProcessPacket::ReceiveUdpPackets(m_receivedPacket);
+        if (TickManager::m_instance->IsTickPacket(m_receivedPacket))
+        {
+            TickManager::m_instance->SaveTickPacket(m_receivedPacket);
+        } 
+        else
+        {
+            ProcessPacket::ReceiveUdpPackets(m_receivedPacket);
+        }
     }
 }
 

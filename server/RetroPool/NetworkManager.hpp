@@ -32,4 +32,6 @@ class NetworkManager
 	void ConnectToServer();
 
 	void SendToAllClients(sf::Packet& packet);
+
+	void SendToClient(std::pair<sf::IpAddress, unsigned short>& client,sf::Packet& packet);
 };

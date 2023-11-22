@@ -63,6 +63,9 @@
     <ClCompile Include="Delta.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TickManager.cpp">
+      <Filter>Source Files\Networking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.hpp">
@@ -94,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="Delta.hpp">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TickManager.hpp">
+      <Filter>Source Files\Networking</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

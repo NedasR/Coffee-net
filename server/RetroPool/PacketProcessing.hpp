@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Network.hpp>
+#include <chrono>
 
 enum class PacketIDs : sf::Uint8
 {
@@ -25,6 +26,8 @@ class PacketProcessing
 	private:
 
 	public:
+
+	static std::chrono::milliseconds serverTimeStamp;
 
 	static void ProcessPacket(sf::Packet packet);
 

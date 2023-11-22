@@ -27,6 +27,8 @@ void NetworkManager::BindSocket(sf::IpAddress& ipAddress, unsigned short port)
 
 void NetworkManager::SocketListen()
 {
+	// catch client inputs and other stuff for tick updates
+	m_receivedPacket.clear();
 	if (m_socket.receive(m_receivedPacket, m_receivedIP, m_receivedPort) == sf::Socket::Done)
 	{
 		PacketProcessing::ProcessPacket(m_receivedPacket);
@@ -53,4 +55,9 @@ void NetworkManager::SendToAllClients(sf::Packet& packet)
 		//if (m_receivedIP == it.first && m_receivedPort == it.second) { continue; }
 		m_socket.send(packet, it.first, it.second);
 	}
+}
+
+void NetworkManager::SendToClient(std::pair<sf::IpAddress, unsigned short>& client, sf::Packet& packet)
+{
+	m_socket.send(packet, client.first, client.second);
 }

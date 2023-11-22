@@ -2,6 +2,9 @@
 #include "NetworkIDHandler.hpp"
 #include "NetworkManager.hpp"
 #include <iostream>
+#include "TickManager.hpp"
+
+std::chrono::milliseconds PacketProcessing::serverTimeStamp;
 
 void PacketProcessing::ProcessPacket(sf::Packet packet)
 {
@@ -14,6 +17,13 @@ void PacketProcessing::ProcessPacket(sf::Packet packet)
 	{
 		case (sf::Uint8)PacketIDs::Ping:
 		{
+			std::uint64_t clientTime;
+
+			packet >> clientTime;
+
+			std::chrono::milliseconds RTT = std::chrono::milliseconds(clientTime) - serverTimeStamp;
+
+			std::cout << "RTT TIME: " << RTT.count() << std::endl;
 
 			break;
 		}
@@ -43,6 +53,7 @@ void PacketProcessing::ProcessPacket(sf::Packet packet)
 					break;
 				}
 			}
+			sendPacket << -1;
 			sendPacket << (sf::Uint8)PacketIDs::ReceiveNetworkID;
 			sendPacket << assignToLocalID;
 			sendPacket << id;
@@ -69,23 +80,20 @@ void PacketProcessing::ProcessPacket(sf::Packet packet)
 			if (W)
 			{
 				ptr.m_position.y -= 20.0f * 0.4f;
-				W = 1;
 			}
 			if (A)
 			{
 				ptr.m_position.x -= 20.0f * 0.4f;
-				A = -1;
 			}
 			if (S)
 			{
 				ptr.m_position.y += 20.0f * 0.4f;
-				S = -1;
 			}
 			if (D)
 			{
 				ptr.m_position.x += 20.0f * 0.4f;
-				D = 1;
 			}
+			sendPacket << TickManager::m_instance->GetCurrentTick();
 			sendPacket << (sf::Uint8)PacketIDs::PostionUpdate;
 			sendPacket << ID << ptr.m_position.x << ptr.m_position.y;
 			//std::cout << "Networked ID : " << ID << " Position :" << x << " " << y << std::endl;
@@ -108,6 +116,7 @@ void PacketProcessing::ProcessPacket(sf::Packet packet)
 				{
 				
 				sendPacket.clear();
+				sendPacket << -1;
 				sendPacket << (sf::Uint8)PacketIDs::SyncObject;
 				sendPacket << (sf::Uint8)ObjectTypeIDs::Character;
 				sendPacket << ids.first;// id

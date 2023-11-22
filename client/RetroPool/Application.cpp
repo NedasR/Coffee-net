@@ -23,13 +23,12 @@ void Application::GameLoop()
     while (m_window.isOpen())
     {
 
-        if (clock.getElapsedTime() >= sf::seconds(tickInterval))
-        {
-            TickUpdate();
-            clock.restart();
-        }
-
         //change from here to
+
+        if (m_tickManager.DoTickUdpate())
+        {
+            m_tickManager.TickUdpate();
+        }
         sf::Event event;
         while (m_window.pollEvent(event))
         {
@@ -60,11 +59,6 @@ void Application::GameLoop()
         Render();
         Delta::ResetDeltaTime();
     }
-}
-
-void Application::TickUpdate()
-{
-    
 }
 
 void Application::Render()

@@ -32,6 +32,7 @@
     <ClCompile Include="ProcessPacket.cpp" />
     <ClCompile Include="RendererManager.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="TickManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.hpp" />
@@ -44,6 +45,7 @@
     <ClInclude Include="ProcessPacket.hpp" />
     <ClInclude Include="RendererManager.hpp" />
     <ClInclude Include="Scene.hpp" />
+    <ClInclude Include="TickManager.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
