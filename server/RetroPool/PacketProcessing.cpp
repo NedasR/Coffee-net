@@ -21,9 +21,11 @@ void PacketProcessing::ProcessPacket(sf::Packet packet)
 
 			packet >> clientTime;
 
-			std::chrono::milliseconds RTT = std::chrono::milliseconds(clientTime) - serverTimeStamp;
+			Client& client = NetworkManager::m_instance->GetCurrentSender();
+			
+			std::get<2>(client).RTT = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()) - serverTimeStamp;
 
-			std::cout << "RTT TIME: " << RTT.count() << std::endl;
+			std::cout << "RTT TIME: " << std::get<2>(client).RTT.count() << std::endl;
 
 			break;
 		}
@@ -109,7 +111,7 @@ void PacketProcessing::ProcessPacket(sf::Packet packet)
 			//auto requestSender = NetworkManager::m_instance->GetRecentSender();
 			for (auto it : NetworkManager::m_instance->m_clientsConnected)
 			{
-				std::cout << " client : "<< it.first << " port : " << it.second << std::endl;
+				std::cout << " client : "<< std::get<0>(it) << " port : " << std::get<1>(it) << std::endl;
 
 				//client checks each id if it has it or not if it dose it won't sync the id
 				for(auto& ids : NetworkIDHandler::m_networkIDs)

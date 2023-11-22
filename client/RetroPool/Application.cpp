@@ -70,6 +70,13 @@ void Application::Render()
 
 /*
 TODO LIST
-update positions of sprites when the late joiner joins since right now i it only updates when a sprite moves 
+- Fix problem of packet dropping
+- Implement client reconciliation
+- Make mechanics that sync the server tick count with the clients ticks as close as possible
+- On the server save information about a client or give it an ID and save that ID on a file so 
+  if the client joins again we can resign the data to it the client also needs to save 
+  the ID on it's side since the server will check this and match it with one on it's file
+- save client inputs to do reconciliation if needed
+
 
 */

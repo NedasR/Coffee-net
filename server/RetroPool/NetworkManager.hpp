@@ -1,5 +1,14 @@
 #pragma once
 #include <SFML/Network.hpp>
+#include <chrono>
+
+struct ClientInfo
+{
+	std::chrono::milliseconds RTT;
+	// make an ID for each new client if they don't have an ID then give them one
+};
+
+typedef std::tuple<sf::IpAddress, unsigned short, ClientInfo> Client;
 
 class NetworkManager
 {
@@ -14,8 +23,8 @@ class NetworkManager
 	sf::Packet m_receivedPacket;
 
 	public:
-	// needs change
-	std::vector<std::pair<sf::IpAddress, unsigned short>> m_clientsConnected;
+
+	std::vector<Client> m_clientsConnected;
 
 	NetworkManager();
 
@@ -33,5 +42,7 @@ class NetworkManager
 
 	void SendToAllClients(sf::Packet& packet);
 
-	void SendToClient(std::pair<sf::IpAddress, unsigned short>& client,sf::Packet& packet);
+	void SendToClient(Client& client,sf::Packet& packet);
+
+	Client& GetCurrentSender();
 };

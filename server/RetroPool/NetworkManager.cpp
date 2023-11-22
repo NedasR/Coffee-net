@@ -43,7 +43,8 @@ void NetworkManager::SendBack(sf::Packet& packet)
 void NetworkManager::ConnectToServer()
 {
 	// will need to be reworked to implement disconnection
-	m_clientsConnected.push_back(std::make_pair(m_receivedIP, m_receivedPort));
+	ClientInfo clientInfo;
+	m_clientsConnected.push_back(std::make_tuple(m_receivedIP, m_receivedPort, clientInfo));
 	std::cout << "client has connected: " << m_receivedIP << " IP << >> port  " << m_receivedPort <<std::endl;
 }
 
@@ -53,11 +54,23 @@ void NetworkManager::SendToAllClients(sf::Packet& packet)
 	{
 		// temp fix
 		//if (m_receivedIP == it.first && m_receivedPort == it.second) { continue; }
-		m_socket.send(packet, it.first, it.second);
+		m_socket.send(packet, std::get<0>(it), std::get<1>(it));
 	}
 }
 
-void NetworkManager::SendToClient(std::pair<sf::IpAddress, unsigned short>& client, sf::Packet& packet)
+Client& NetworkManager::GetCurrentSender()
 {
-	m_socket.send(packet, client.first, client.second);
+	for( auto& it : m_clientsConnected)
+	{
+		if (std::get<0>(it) == m_receivedIP &&
+			std::get<1>(it) == m_receivedPort)
+		{
+			return it;
+		}
+	}
+}
+
+void NetworkManager::SendToClient(Client& client, sf::Packet& packet)
+{
+	m_socket.send(packet, std::get<0>(client), std::get<1>(client));
 }

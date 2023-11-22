@@ -32,7 +32,7 @@ void TickManager::TickUpdate()
 	sendPacket << (sf::Uint8)PacketIDs::Ping;
 
 	PacketProcessing::serverTimeStamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
-	NetworkManager::m_instance->SendToClient(NetworkManager::m_instance->m_clientsConnected[0], sendPacket);
+	NetworkManager::m_instance->SendToAllClients(sendPacket);
 	}
 }
 

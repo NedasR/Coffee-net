@@ -23,9 +23,7 @@ void ProcessPacket::ReceiveUdpPackets(sf::Packet& packet)
 		{
 
 			sf::Packet sendPacket;
-			std::chrono::milliseconds time = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
 			sendPacket << (sf::Uint8)PacketIDs::Ping;
-			sendPacket << static_cast<std::uint64_t>(time.count());
 			NetworkManager::m_instance->SendBack(sendPacket);
 			break;
 		}
