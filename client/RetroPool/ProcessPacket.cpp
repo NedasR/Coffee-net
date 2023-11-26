@@ -6,9 +6,11 @@
 #include "Character.hpp"
 #include <memory>
 #include <chrono>
+#include "TickManager.hpp"
 
 void ProcessPacket::ReceiveUdpPackets(sf::Packet& packet)
 {
+
 	sf::Uint8 packetID;
 	
 	int tickstuff;
@@ -104,6 +106,30 @@ void ProcessPacket::ReceiveUdpPackets(sf::Packet& packet)
 
 			break;
 		}
+
+		case (sf::Uint8)PacketIDs::SendCurrentTick:
+		{
+			int tick;
+			packet >> tick;
+			std::cout << "TICK is : " << tick << std::endl;
+			TickManager::m_instance->SetCurrentTick(tick);
+			break;
+		}
+
+		case (sf::Uint8)PacketIDs::SyncClientTick:
+		{
+			int tick;
+			packet >> tick;
+			TickManager::m_instance->SetCurrentTick(tick);
+			std::cout << "the server current tick is " << tick << std::endl;
+			sf::Packet sendPacket;
+			sendPacket << (sf::Uint8)PacketIDs::ClientSyncCallback;
+			NetworkManager::m_instance->SendBack(sendPacket);
+			
+
+			break;
+		}
+
 	}
 
 }

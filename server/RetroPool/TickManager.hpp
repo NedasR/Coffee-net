@@ -25,6 +25,9 @@ class TickManager
 
 	inline int GetCurrentTick(){return m_currentTick;}
 
+	void InitialClientTickSync();
+
+
 
 	
 };

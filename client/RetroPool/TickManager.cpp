@@ -36,9 +36,8 @@ bool TickManager::DoTickUdpate()
 
 bool TickManager::IsTickPacket(sf::Packet packet)
 {
-    unsigned int tickNumber;
+    int tickNumber;
     packet >> tickNumber;
-
     if (tickNumber == -1){return false;}
 
     return true;
@@ -46,7 +45,11 @@ bool TickManager::IsTickPacket(sf::Packet packet)
 
 void TickManager::SaveTickPacket(sf::Packet packet)
 {
-    unsigned int tickNumber;
+    //broken not working fix later
+    int tickNumber;
+    sf::Uint8 type;
+    packet >> type;
+    std::cout << "type is : " << type << std::endl;
     packet >> tickNumber;
     std::cout << tickNumber << " this tick is" << std::endl;
     m_currentTick = tickNumber;

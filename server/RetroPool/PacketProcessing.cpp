@@ -8,6 +8,7 @@ std::chrono::milliseconds PacketProcessing::serverTimeStamp;
 
 void PacketProcessing::ProcessPacket(sf::Packet packet)
 {
+
 	sf::Packet sendPacket;
 	sf::Uint8 packetID;
 
@@ -68,6 +69,13 @@ void PacketProcessing::ProcessPacket(sf::Packet packet)
 		case (sf::Uint8)PacketIDs::ConnectToServer:
 		{
 			NetworkManager::m_instance->ConnectToServer();
+
+			TickManager::m_instance->InitialClientTickSync();
+			//sendPacket << -1;
+			//sendPacket << (sf::Uint8)PacketIDs::SendCurrentTick;
+			//sendPacket << TickManager::m_instance->GetCurrentTick();
+			//NetworkManager::m_instance->SendBack(sendPacket);
+
 			break;
 		}
 
@@ -132,5 +140,15 @@ void PacketProcessing::ProcessPacket(sf::Packet packet)
 			break;
 		}
 
+		case (sf::Uint8)PacketIDs::ClientSyncCallback:
+		{
+			Client& client = NetworkManager::m_instance->GetCurrentSender();
+			
+			float latancyGap = ((float)TickManager::m_instance->GetCurrentTick() - (float)std::get<2>(client).currentClientTick) / 2.0f;
+
+			std::cout << "gap is " << latancyGap << std::endl;
+
+			break;
+		}
 	}
 }

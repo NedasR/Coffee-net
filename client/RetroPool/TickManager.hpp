@@ -30,6 +30,8 @@ class TickManager
 
 	bool IsTickPacket(sf::Packet packet);
 
+	inline void SetCurrentTick(unsigned int currentTick) { m_currentTick = currentTick; }
+
 	//pass by reference in the near future
 	void SaveTickPacket(sf::Packet packet);
 

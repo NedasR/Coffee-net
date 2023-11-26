@@ -11,7 +11,9 @@ enum class PacketIDs : sf::Uint8
 	PostionUpdate = 6,
 	SyncObject = 7,
 	LateJoinerSync = 8,
-
+	SendCurrentTick = 9,
+	SyncClientTick = 10,
+	ClientSyncCallback = 11,
 };
 
 enum class ObjectTypeIDs : sf::Uint8

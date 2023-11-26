@@ -33,6 +33,8 @@ void TickManager::TickUpdate()
 
 	PacketProcessing::serverTimeStamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
 	NetworkManager::m_instance->SendToAllClients(sendPacket);
+
+
 	}
 }
 
@@ -44,4 +46,19 @@ bool TickManager::DoTickUpdate()
 		return true;
 	}
 	return false;
+}
+
+void TickManager::InitialClientTickSync()
+{
+	sf::Packet sendPacket;
+
+	sendPacket << -1;
+	sendPacket << (sf::Uint8)PacketIDs::SyncClientTick;
+	int clienttick = TickManager::m_instance->GetCurrentTick();
+	sendPacket << clienttick;
+
+	Client& client = NetworkManager::m_instance->GetCurrentSender();
+	std::get<2>(client).currentClientTick = clienttick;
+
+	NetworkManager::m_instance->SendBack(sendPacket);
 }

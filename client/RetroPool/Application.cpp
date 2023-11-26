@@ -78,5 +78,9 @@ TODO LIST
   the ID on it's side since the server will check this and match it with one on it's file
 - save client inputs to do reconciliation if needed
 
+// to do for tomorrow 
+- make server tick sync 
+- change how the client connects so you can simulate latency this will need changing of architecture
+
 
 */
