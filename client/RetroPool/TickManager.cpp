@@ -16,10 +16,8 @@ TickManager::TickManager()
 void TickManager::TickUdpate()
 {
     m_currentTick++;
-    if (m_currentTick > m_tickRate)
-    {
-        m_currentTick = 0;
-    }
+
+    m_currentTick %= m_tickRate + 1;
     std::cout << m_currentTick << std::endl;
 }
 

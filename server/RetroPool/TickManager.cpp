@@ -18,23 +18,25 @@ TickManager::TickManager()
 void TickManager::TickUpdate()
 {
 	m_currentTick++;
-	if (m_currentTick > m_tickRate)
-	{
-		m_currentTick = 0;
-	}
+
+	m_currentTick %= m_tickRate + 1;
+
 	std::cout << m_currentTick << std::endl;
+
+	NetworkManager::m_instance->UpdateClientTickCounters();
 
 	if (!NetworkManager::m_instance->m_clientsConnected.empty())
 	{
-	sf::Packet sendPacket;
+		if (m_currentTick == m_tickRate)
+		{
+			sf::Packet sendPacket;
 
-	sendPacket << -1;
-	sendPacket << (sf::Uint8)PacketIDs::Ping;
+			sendPacket << -1;
+			sendPacket << (sf::Uint8)PacketIDs::Ping;
 
-	PacketProcessing::serverTimeStamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
-	NetworkManager::m_instance->SendToAllClients(sendPacket);
-
-
+			PacketProcessing::serverTimeStamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+			NetworkManager::m_instance->SendToAllClients(sendPacket);
+		}
 	}
 }
 
@@ -58,6 +60,9 @@ void TickManager::InitialClientTickSync()
 	sendPacket << clienttick;
 
 	Client& client = NetworkManager::m_instance->GetCurrentSender();
+
+	std::get<2>(client).tickCounter.StartCounter();
+
 	std::get<2>(client).currentClientTick = clienttick;
 
 	NetworkManager::m_instance->SendBack(sendPacket);

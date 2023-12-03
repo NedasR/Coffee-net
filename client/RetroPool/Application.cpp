@@ -10,12 +10,14 @@ void Application::GameInit()
 
     m_window.setFramerateLimit(30);
 
-    NetworkManager::m_instance->ConnectToServer(sf::IpAddress("192.168.1.153"),(unsigned short)60000);
+    NetworkManager::m_instance->ConnectToServer(sf::IpAddress("192.168.1.162"),(unsigned short)60000);
 
 	m_headScene = &Cscene;
 
 	m_headScene->LoadScene();
 
+    tickRateFont.loadFromFile("assets/arial.ttf");
+    tickRate.setFont(tickRateFont);
 }
 
 void Application::GameLoop()
@@ -57,6 +59,9 @@ void Application::GameLoop()
         }
 
         Render();
+        tickRate.setString(std::to_string(TickManager::m_instance->getCurrentTick()));
+        m_window.draw(tickRate);
+        m_window.display();
         Delta::ResetDeltaTime();
     }
 }
@@ -65,7 +70,7 @@ void Application::Render()
 {
     m_window.clear();
     m_renderMag.RenderTheList(m_window);
-    m_window.display();
+   // m_window.display();
 }
 
 /*
@@ -80,7 +85,5 @@ TODO LIST
 
 // to do for tomorrow 
 - make server tick sync 
-- change how the client connects so you can simulate latency this will need changing of architecture
-
 
 */

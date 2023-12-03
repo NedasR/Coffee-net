@@ -4,6 +4,10 @@
 Server::Server(sf::IpAddress& serverAddress, unsigned short serverPort)
 {
 	NetworkManager::m_instance->BindSocket(serverAddress, serverPort);
+
+    tickRateFont.loadFromFile("assets/arial.ttf");
+    tickRate.setFont(tickRateFont);
+    tickRate.setCharacterSize(24);
 }
 
 void Server::ServerLoop()
@@ -27,7 +31,8 @@ void Server::ServerLoop()
         NetworkManager::m_instance->SocketListen();
 
         m_window.clear();
-        //window.draw();
+        tickRate.setString(std::to_string(TickManager::m_instance->GetCurrentTick()));
+        m_window.draw(tickRate);
         m_window.display();
     }
 }

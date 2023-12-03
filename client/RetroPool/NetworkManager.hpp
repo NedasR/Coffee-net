@@ -9,10 +9,10 @@ class NetworkManager
 {
 	private:
 
-	sf::IpAddress m_serverIP = sf::IpAddress("192.168.1.153");
+	sf::IpAddress m_serverIP = sf::IpAddress("192.168.1.162");
 	unsigned short m_serverPort = 60000;
 
-	sf::IpAddress m_clientIP = sf::IpAddress("192.168.1.153");
+	sf::IpAddress m_clientIP = sf::IpAddress("192.168.1.162");
 	unsigned short m_clientPort = sf::Socket::AnyPort;
 
 	sf::IpAddress m_recivedIP;

@@ -34,11 +34,11 @@ void NetworkManager::SocketListen()
 	{
 		if (NETWORK_LATENCY_SIMULATOR)
 		{
-			PacketProcessing::ProcessPacket(m_receivedPacket);
+			DelayedPacketReceiving(m_receivedPacket);
 		}
 		else
 		{
-			DelayedPacketReceiving(m_receivedPacket);
+			PacketProcessing::ProcessPacket(m_receivedPacket);
 		}
 	}
 	if (NETWORK_LATENCY_SIMULATOR) {ProcessDelayedPackets();};
@@ -87,6 +87,7 @@ Client& NetworkManager::GetCurrentSender()
 
 void NetworkManager::ProcessDelayedPackets()
 {
+	
 	auto it = DelayedPacketReceivingList.begin();
 	while (it != DelayedPacketReceivingList.end())
 	{
@@ -108,29 +109,41 @@ void NetworkManager::ProcessDelayedPackets()
 	{
 		if (its->counter.getElapsedTime() >= sf::milliseconds(NETWORK_LATENCY_RTT_MS / 2))
 		{
-			Send(it->packet,it->IP,it->port);
-			its = DelayedPacketSendingList.erase(it);
+			sf::Packet packet = its->packet;
+			sf::IpAddress ip = its->IP;
+			unsigned int port = its->port;
+
+			m_socket.send(packet, ip, port);
+			its = DelayedPacketSendingList.erase(its);
 		}
 		else
 		{
 			++its;
 		}
 	}
+
 }
 
-void NetworkManager::DelayedPacketSending(sf::Packet& packet,sf::IpAddress& ip,unsigned int port)
+void NetworkManager::DelayedPacketSending(sf::Packet& packet,sf::IpAddress ip,unsigned int port)
 {
 	DelayedPacket delayedPacket;
 	delayedPacket.packet = packet;
 	delayedPacket.IP = ip;
 	delayedPacket.port = port;
 
-	DelayedPacketReceivingList.push_back(delayedPacket);
+	DelayedPacketSendingList.push_back(delayedPacket);
 }
 
-void NetworkManager::Send(sf::Packet& packet, sf::IpAddress ip, unsigned int port)
+void NetworkManager::Send(sf::Packet packet, sf::IpAddress ip, unsigned int port)
 {
-	m_socket.send(packet, ip, port);
+	if (NETWORK_LATENCY_SIMULATOR)
+	{
+		DelayedPacketSending(packet, ip, port);
+	}
+	else
+	{
+		m_socket.send(packet, ip, port);
+	}
 }
 
 void NetworkManager::SendToClient(Client& client, sf::Packet& packet)
@@ -146,4 +159,12 @@ void NetworkManager::DelayedPacketReceiving(sf::Packet& packet)
 	delayedPacket.port = m_receivedPort;
 	
 	DelayedPacketReceivingList.push_back(delayedPacket);
+}
+
+void NetworkManager::UpdateClientTickCounters()
+{
+	for (auto& client : m_clientsConnected)
+	{
+		std::get<2>(client).tickCounter.UpdateTickCount();
+	}
 }

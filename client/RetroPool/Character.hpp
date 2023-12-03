@@ -2,6 +2,7 @@
 #include "NetSprite.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Event.hpp>
+#include <SFML/System.hpp>
 
 class Character : public NetSprite
 {

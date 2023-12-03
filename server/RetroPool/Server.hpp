@@ -14,6 +14,10 @@ class Server
 
 	TickManager m_tickManager;
 
+	sf::Text tickRate;
+
+	sf::Font tickRateFont;
+
 	public:
 
 	Server(sf::IpAddress& serverAddress,unsigned short serverPort);

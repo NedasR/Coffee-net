@@ -8,9 +8,9 @@ class TickManager
 {
 	private:
 
-	float m_tickRate = 30.0f;
+	int m_tickRate = 10;
 
-	float m_tickInterval = 1 / m_tickRate;
+	float m_tickInterval = 1.0f / m_tickRate;
 
 	int m_currentTick = 0;
 
@@ -31,6 +31,8 @@ class TickManager
 	bool IsTickPacket(sf::Packet packet);
 
 	inline void SetCurrentTick(unsigned int currentTick) { m_currentTick = currentTick; }
+
+	inline int getCurrentTick(){return m_currentTick;}
 
 	//pass by reference in the near future
 	void SaveTickPacket(sf::Packet packet);

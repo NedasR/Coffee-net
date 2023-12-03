@@ -32,6 +32,12 @@ class Application
 
 	TickManager m_tickManager;
 
+	// temp
+	sf::Text tickRate;
+
+	sf::Font tickRateFont;
+	//ends here
+
 	public:
 
 	inline sf::RenderWindow& GetWindow(){return m_window;}

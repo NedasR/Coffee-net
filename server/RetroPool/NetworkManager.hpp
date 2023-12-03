@@ -1,15 +1,17 @@
 #pragma once
 #include <SFML/Network.hpp>
 #include <chrono>
+#include <vector>
+#include "TickCounter.hpp"
 
-#define NETWORK_LATENCY_SIMULATOR false
-#define NETWORK_LATENCY_RTT_MS 100
+#define NETWORK_LATENCY_SIMULATOR true
+#define NETWORK_LATENCY_RTT_MS 800
 
 struct ClientInfo
 {
 	std::chrono::milliseconds RTT;
 	int currentClientTick;
-
+	TickCounter tickCounter;
 
 	// make an ID for each new client if they don't have an ID then give them one
 };
@@ -61,7 +63,7 @@ class NetworkManager
 
 	void SendToAllClients(sf::Packet& packet);
 
-	void Send(sf::Packet& packet,sf::IpAddress ip,unsigned int port);
+	void Send(sf::Packet packet,sf::IpAddress ip,unsigned int port);
 
 	void SendToClient(Client& client,sf::Packet& packet);
 
@@ -69,7 +71,9 @@ class NetworkManager
 
 	void ProcessDelayedPackets();
 
-	void DelayedPacketSending(sf::Packet& packet, sf::IpAddress& ip, unsigned int port);
+	void DelayedPacketSending(sf::Packet& packet, sf::IpAddress ip, unsigned int port);
 
 	Client& GetCurrentSender();
+
+	void UpdateClientTickCounters();
 };

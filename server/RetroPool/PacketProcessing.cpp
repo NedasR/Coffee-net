@@ -143,8 +143,15 @@ void PacketProcessing::ProcessPacket(sf::Packet packet)
 		case (sf::Uint8)PacketIDs::ClientSyncCallback:
 		{
 			Client& client = NetworkManager::m_instance->GetCurrentSender();
+
+			std::cout << "Server A is : " << TickManager::m_instance->GetCurrentTick() << std::endl ;
+			std::cout << "Client B is : " << std::get<2>(client).currentClientTick << std::endl;
 			
-			float latancyGap = ((float)TickManager::m_instance->GetCurrentTick() - (float)std::get<2>(client).currentClientTick) / 2.0f;
+			//float latancyGap = ((float)TickManager::m_instance->GetCurrentTick() - (float)std::get<2>(client).currentClientTick) / 2.0f;
+
+			float latancyGap = std::get<2>(client).tickCounter.GetCount() / 2;
+
+			//std::get<2>(client).tickCounter.StopCounter();
 
 			std::cout << "gap is " << latancyGap << std::endl;
 

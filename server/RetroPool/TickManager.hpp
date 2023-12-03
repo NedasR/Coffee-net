@@ -5,11 +5,13 @@ class TickManager
 {
 	private:
 
-	float m_tickRate = 30.0f;
+	int m_tickRate = 10;
 
-	float m_tickInterval = 1 / m_tickRate;
+	float m_tickInterval = 1.0f / m_tickRate;
 
 	int m_currentTick;
+
+	bool m_startTickCount = false;
 
 	sf::Clock clock;
 
@@ -27,7 +29,4 @@ class TickManager
 
 	void InitialClientTickSync();
 
-
-
-	
 };
