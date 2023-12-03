@@ -8,7 +8,7 @@ void Application::GameInit()
 
     m_window.create(sf::VideoMode(400, 400), "Coffee's Client");
 
-    m_window.setFramerateLimit(30);
+    m_window.setFramerateLimit(60);
 
     NetworkManager::m_instance->ConnectToServer(sf::IpAddress("192.168.1.162"),(unsigned short)60000);
 

@@ -144,16 +144,19 @@ void PacketProcessing::ProcessPacket(sf::Packet packet)
 		{
 			Client& client = NetworkManager::m_instance->GetCurrentSender();
 
-			std::cout << "Server A is : " << TickManager::m_instance->GetCurrentTick() << std::endl ;
-			std::cout << "Client B is : " << std::get<2>(client).currentClientTick << std::endl;
+			//std::cout << "Server A is : " << TickManager::m_instance->GetCurrentTick() << std::endl ;
+			//std::cout << "Client B is : " << std::get<2>(client).currentClientTick << std::endl;
 			
-			//float latancyGap = ((float)TickManager::m_instance->GetCurrentTick() - (float)std::get<2>(client).currentClientTick) / 2.0f;
 
-			float latancyGap = std::get<2>(client).tickCounter.GetCount() / 2;
+			float latancyGap = (float)std::get<2>(client).tickCounter.GetCount() / 2.0f;
 
-			//std::get<2>(client).tickCounter.StopCounter();
+			std::get<2>(client).tickCounter.StopCounter();
 
-			std::cout << "gap is " << latancyGap << std::endl;
+			//std::cout << "gap is " << latancyGap << std::endl;
+
+			sendPacket << - 1;
+			sendPacket << (sf::Uint8)PacketIDs::TickAdjustment;
+			sendPacket << (int)latancyGap;
 
 			break;
 		}

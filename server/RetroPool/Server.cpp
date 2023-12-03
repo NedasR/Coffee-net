@@ -7,11 +7,12 @@ Server::Server(sf::IpAddress& serverAddress, unsigned short serverPort)
 
     tickRateFont.loadFromFile("assets/arial.ttf");
     tickRate.setFont(tickRateFont);
-    tickRate.setCharacterSize(24);
+    //tickRate.setCharacterSize(24);
 }
 
 void Server::ServerLoop()
 {
+    m_window.setFramerateLimit(60);
     while (m_window.isOpen())
     {
         if (m_tickManager.DoTickUpdate())

@@ -5,7 +5,7 @@
 #include "TickCounter.hpp"
 
 #define NETWORK_LATENCY_SIMULATOR true
-#define NETWORK_LATENCY_RTT_MS 800
+#define NETWORK_LATENCY_RTT_MS 100
 
 struct ClientInfo
 {

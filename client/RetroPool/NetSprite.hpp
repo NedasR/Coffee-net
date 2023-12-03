@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include "ProcessPacket.hpp"
+#include <SFML/System.hpp>
 class NetSprite : public sf::Sprite , public std::enable_shared_from_this<NetSprite>
 {
 	private:

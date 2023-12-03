@@ -5,7 +5,7 @@ class TickManager
 {
 	private:
 
-	int m_tickRate = 10;
+	int m_tickRate = 30;
 
 	float m_tickInterval = 1.0f / m_tickRate;
 

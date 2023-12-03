@@ -1,5 +1,6 @@
 #include "TickManager.hpp"
 #include <iostream>
+#include "ProcessPacket.hpp"
 
 TickManager* TickManager::m_instance;
 
@@ -46,10 +47,10 @@ void TickManager::SaveTickPacket(sf::Packet packet)
     //broken not working fix later
     int tickNumber;
     sf::Uint8 type;
-    packet >> type;
-    std::cout << "type is : " << type << std::endl;
     packet >> tickNumber;
+    packet >> type;
     std::cout << tickNumber << " this tick is" << std::endl;
-    m_currentTick = tickNumber;
+    if (type == (sf::Uint8)PacketIDs::PostionUpdate){std::cout << " Pos packet" << std::endl;}
+    //m_currentTick = tickNumber;
     tickCache[tickNumber].push_back(packet);
 }

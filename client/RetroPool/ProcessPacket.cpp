@@ -130,6 +130,15 @@ void ProcessPacket::ReceiveUdpPackets(sf::Packet& packet)
 			break;
 		}
 
+		case (sf::Uint8)PacketIDs::TickAdjustment:
+		{
+			int tickAdjustment;
+			packet >> tickAdjustment;
+			int adjusted = TickManager::m_instance->getCurrentTick() + tickAdjustment;
+			TickManager::m_instance->SetCurrentTick(adjusted);
+			break;
+		}
+
 	}
 
 }
