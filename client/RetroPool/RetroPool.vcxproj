@@ -24,6 +24,7 @@
     <ClCompile Include="Character.hpp" />
     <ClCompile Include="CircleScene.cpp" />
     <ClCompile Include="ConnectionHandler.cpp" />
+    <ClCompile Include="Delta.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NetSprite.cpp" />
@@ -31,17 +32,20 @@
     <ClCompile Include="ProcessPacket.cpp" />
     <ClCompile Include="RendererManager.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="TickManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.hpp" />
     <ClInclude Include="CircleScene.hpp" />
     <ClInclude Include="ConnectionHandler.hpp" />
+    <ClInclude Include="Delta.hpp" />
     <ClInclude Include="GameManager.hpp" />
     <ClInclude Include="NetSprite.hpp" />
     <ClInclude Include="NetworkManager.hpp" />
     <ClInclude Include="ProcessPacket.hpp" />
     <ClInclude Include="RendererManager.hpp" />
     <ClInclude Include="Scene.hpp" />
+    <ClInclude Include="TickManager.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

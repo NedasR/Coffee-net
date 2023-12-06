@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Delta.hpp"
 #include <memory>
 #include "Scene.hpp"
 #include <iostream>
@@ -10,13 +11,16 @@
 #include "CircleScene.hpp"
 #include "RendererManager.hpp"
 #include "Character.hpp"
+#include "TickManager.hpp"
 class Application
 {
 	private:
 
+	Delta DeltaTime;
+
 	std::shared_ptr<Scene> m_currentScene;
 
-	Scene* m_headScene;
+	Scene* m_headScene = nullptr;
 
 	sf::RenderWindow m_window;
 
@@ -25,6 +29,14 @@ class Application
 	CircleScene Cscene;
 
 	RendererManager m_renderMag;
+
+	TickManager m_tickManager;
+
+	// temp
+	sf::Text tickRate;
+
+	sf::Font tickRateFont;
+	//ends here
 
 	public:
 

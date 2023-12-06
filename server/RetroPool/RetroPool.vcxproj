@@ -24,12 +24,16 @@
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="PacketProcessing.cpp" />
     <ClCompile Include="Server.cpp" />
+    <ClCompile Include="TickCounter.cpp" />
+    <ClCompile Include="TickManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NetworkIDHandler.hpp" />
     <ClInclude Include="NetworkManager.hpp" />
     <ClInclude Include="PacketProcessing.hpp" />
     <ClInclude Include="Server.hpp" />
+    <ClInclude Include="TickCounter.hpp" />
+    <ClInclude Include="TickManager.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -8,7 +8,7 @@
 
 int main()
 {
-    sf::IpAddress serverIP = "192.168.1.153";
+    sf::IpAddress serverIP = "192.168.1.162";
 
     unsigned short serverPort; serverPort = 60000;
 

@@ -1,23 +1,46 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-class NetSprite : public sf::Sprite
+#include <memory>
+#include "ProcessPacket.hpp"
+#include <SFML/System.hpp>
+class NetSprite : public sf::Sprite , public std::enable_shared_from_this<NetSprite>
 {
 	private:
 
 	protected:
+
 	sf::Uint16 m_networkID = 0;
 
+	static sf::Uint16 m_localIDCount;
 
-	void RequastNetworkID();
+	sf::Uint8 objectTypeID = 0;
+
+	sf::Uint16 LocalID = 0;
+
+	std::shared_ptr<NetSprite> m_itSelf;
+
+	void RequastNetworkID(bool useLocalID);
 
 	public:
 
 	NetSprite();
 
-	virtual void Update(sf::Event& event) = 0;
+	NetSprite(bool useLocalID);
 
-	virtual inline sf::Uint16 GetNetworkID(){ return m_networkID; }
+	NetSprite(sf::Uint16 networkIdSync);
 
-	virtual inline void SetNetworkID(sf::Uint16 id) { m_networkID = id; }
+	void SyncNetworkID(sf::Uint16 networkedID);
+
+	void SyncToNetwork();
+
+	void SyncToNetwork(bool local);
+
+	virtual void Update() = 0;
+
+	inline sf::Uint16 GetNetworkID(){ return m_networkID; }
+
+	inline sf::Uint16 GetLocalID() { return LocalID; }
+
+	inline void SetNetworkID(sf::Uint16 id) { m_networkID = id; }
 
 };
